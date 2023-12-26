@@ -1,4 +1,8 @@
 .img {
     height: 100vh;
     background: url("../../assets/bg.jpeg") center center/cover no-repeat;
+
+    -webkit-box-shadow: -5px 0px 10px -5px rgba(34, 60, 80, 0.2) inset;
+    -moz-box-shadow: -5px 0px 10px -5px rgba(34, 60, 80, 0.2) inset;
+    box-shadow: -5px 0px 10px -5px rgba(34, 60, 80, 0.2) inset;
 }

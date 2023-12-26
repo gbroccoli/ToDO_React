@@ -11,14 +11,11 @@ interface BntProps {
 }
 
 
-const Button: FC<BntProps> = ({types, text, onClicks, style}) => {
-
-    console.log(typeof onClicks);
-    
+const Button: FC<BntProps> = ({types, text, onClicks, style}) => {    
 
     return (
         <>
-            <button type={types} className={style}>{text}</button>
+            <button type={types} onClick={onClicks} className={style}>{text}</button>
         </>
     )
 }
