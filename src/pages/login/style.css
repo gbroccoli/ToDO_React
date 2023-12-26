@@ -1,4 +1,4 @@
-.full-container {
-    height: 100%;
+.img {
+    height: 100vh;
+    background: url("../../assets/bg.jpeg") center center/cover no-repeat;
 }
-
