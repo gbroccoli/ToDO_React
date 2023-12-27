@@ -1,24 +1,27 @@
-import { FC } from "react"
+import { FC, KeyboardEvent } from "react";
 
-type bnt_type = "button" | "submit" | "reset"
+type BtnType = "button" | "submit" | "reset";
 
-interface BntProps {
-    types: bnt_type,
-    text?: string,
-    onClicks?: () => void,
-    style?: string 
-
+interface BtnProps {
+    types: BtnType;
+    text?: string;
+    onClicks?: () => void;
+    style?: string;
 }
 
-
-const Button: FC<BntProps> = ({types, text, onClicks, style}) => {    
+const Button: FC<BtnProps> = ({ types, text, onClicks, style }) => {
 
     return (
         <>
-            <button type={types} onClick={onClicks} className={style}>{text}</button>
+            <button
+                type={types}
+                onClick={onClicks}
+                className={style}
+            >
+                {text}
+            </button>
         </>
-    )
-}
+    );
+};
 
-
-export default Button
+export default Button;

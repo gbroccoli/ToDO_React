@@ -25,6 +25,8 @@ const RedicToProfile: React.FC = () => {
       navigate("/dash")
     }
   }, [])
+
+  return <></>
 }
 
 const routers = createBrowserRouter([
@@ -37,6 +39,11 @@ const routers = createBrowserRouter([
       </>
     )
   },
+
+  {
+    path: "/dash",
+    element: <div>Hello</div>
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
