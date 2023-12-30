@@ -1,32 +1,40 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+// import App from './App.tsx'
 import {
   createBrowserRouter, RouterProvider, useNavigate
 } from  "react-router-dom"
 import './index.css'
 import Login from './pages/login/Login.tsx'
+import $api from './server/server.ts'
 
 
-const isAuth = (): boolean => {
-  const cokiesValue = document.cookie
-  .split(";")
-  .find((row)=>row.startsWith("access_token"))
+const isAuth = () => {
 
-  return cokiesValue !== undefined
+  const auth = $api.get("/auth/authorization")
+  .then((res) => {
+    return res.data.authorization
+  })    
 
+  return auth
 }
 
 const RedicToProfile: React.FC = () => {
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    if (isAuth()) {
+  const checkAuth =  async () => {
+    const authorization = await isAuth()
+
+    if (authorization) {
+      console.log("dsadafasfas");
+      
       navigate("/dash")
     }
-  }, [])
+  }
 
-  return <></>
+  checkAuth()
+
+  return null
 }
 
 const routers = createBrowserRouter([
@@ -42,7 +50,7 @@ const routers = createBrowserRouter([
 
   {
     path: "/dash",
-    element: <div>Hello</div>
+    element: <>sdfsd</>
   }
 ])
 

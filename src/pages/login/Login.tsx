@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import Button from "@/components/button/Buttom"
 import "./style.css"
 import $api from "@/server/server"
+import Notifications from "@/components/notifications/Notifications"
 
 interface msg {
 	error?: string,
@@ -10,7 +11,7 @@ interface msg {
 
 interface user_json {
 	login: string,
-	password: string,
+	passwd: string,
 	remember: boolean
 }
 
@@ -19,6 +20,11 @@ const Login = () => {
 	const [login, setLogin] = useState<string>("")
 	const [passwd, setPasswd] = useState<string>("")
 	const [rememberMe, setRememberMe] = useState<boolean>(false)
+	const [errors, setErrors] = useState<boolean>(false)
+	const [errorMsg, setErrorMsg] = useState<string>("")
+	const [success, setSuccess] = useState<boolean>(false)
+
+	let notion = null
 
 	/* errors */
 	const [msg, setMsg] = useState<msg>({})
@@ -38,23 +44,30 @@ const Login = () => {
 
 		const user: user_json = {
 			login: login,
-			password: passwd,
+			passwd: passwd,
 			remember: rememberMe,
 		}
 
 		$api.post("/auth/login", user, {
 			headers: {
 				'Content-Type': 'application/json',
-			}
+			},
+			withCredentials: true
 		})
 			.then(res => {
 				const {data} = res
 
-				if (data.success === "ok") {
-					window.location.replace("/dash")
+				if (data.success === "Logged in successfully") {
+
+					setSuccess(true)
+
+					// window.location.replace("/dash")
 				}
 			})
-			.catch(err => console.log(err))
+			.catch((err) => {
+				setErrorMsg(err.response.data.error)
+				setErrors(true)
+			})
 	}
 
 
@@ -79,6 +92,9 @@ const Login = () => {
 							Запомниить меня на 30 дней
 						</label>
 						<Button types="button" text="Sing in" style="w-[70px] bg-blue-600 text-white rounded-md px-2 py-1 mt-4" onClicks={auth}/>
+
+						{success ? <Notifications type="success" text="Авторизация прошла успешно" title="Успешно!" /> : null}
+						{errors ? <Notifications type="error" text={errorMsg} title="Ошибка!" /> : null}
 					</form>
 				</div>
 			</div>
