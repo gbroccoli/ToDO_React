@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Button from "@/components/button/Buttom"
 import "./style.css"
 import $api from "@/server/server"
@@ -24,7 +24,13 @@ const Login = () => {
 	const [errorMsg, setErrorMsg] = useState<string>("")
 	const [success, setSuccess] = useState<boolean>(false)
 
-	let notion = null
+	const isError = () => {
+		setErrors(false)
+	}
+
+	const isSuccess = () => {
+		setSuccess(false)
+	}
 
 	/* errors */
 	const [msg, setMsg] = useState<msg>({})
@@ -61,7 +67,7 @@ const Login = () => {
 
 					setSuccess(true)
 
-					// window.location.replace("/dash")
+					window.location.replace("/dash")
 				}
 			})
 			.catch((err) => {
@@ -91,10 +97,10 @@ const Login = () => {
 							<input type="checkbox" id="remember" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} className="mr-1 " />
 							Запомниить меня на 30 дней
 						</label>
-						<Button types="button" text="Sing in" style="w-[70px] bg-blue-600 text-white rounded-md px-2 py-1 mt-4" onClicks={auth}/>
+						<Button types="button" text="Sing in" style="btn-sing-in w-[70px] bg-blue-600 text-white rounded-md px-2 py-1 mt-4" onClicks={auth}/>
 
-						{success ? <Notifications type="success" text="Авторизация прошла успешно" title="Успешно!" /> : null}
-						{errors ? <Notifications type="error" text={errorMsg} title="Ошибка!" /> : null}
+						{success ? <Notifications type="success" text="Авторизация прошла успешно" title="Успешно!" show={success} func={isSuccess} /> : null}
+						{errors ? <Notifications type="error" text={errorMsg} title="Ошибка!" show={errors} func={isError} /> : null}
 					</form>
 				</div>
 			</div>

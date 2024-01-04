@@ -3,31 +3,19 @@ import ReactDOM from 'react-dom/client'
 // import App from './App.tsx'
 import {
   createBrowserRouter, RouterProvider, useNavigate
-} from  "react-router-dom"
+} from "react-router-dom"
 import './index.css'
 import Login from './pages/login/Login.tsx'
-import $api from './server/server.ts'
-
-
-const isAuth = () => {
-
-  const auth = $api.get("/auth/authorization")
-  .then((res) => {
-    return res.data.authorization
-  })    
-
-  return auth
-}
+import { isAuth } from "@/middleware/isAuth.ts"
+import IsAuthLayout from './middleware/layout/IsAuthLayout.tsx'
 
 const RedicToProfile: React.FC = () => {
   const navigate = useNavigate()
 
-  const checkAuth =  async () => {
+  const checkAuth = async () => {
     const authorization = await isAuth()
 
     if (authorization) {
-      console.log("dsadafasfas");
-      
       navigate("/dash")
     }
   }
@@ -42,20 +30,26 @@ const routers = createBrowserRouter([
     path: "/",
     element: (
       <>
-        <RedicToProfile/>
-        <Login/>
+        <RedicToProfile />
+        <Login />
       </>
     )
   },
 
   {
     path: "/dash",
-    element: <>sdfsd</>
+    element: <IsAuthLayout />,
+    children: [
+      {
+        path: "/dash",
+        element: <div>dsjfhsdjfnlksdnflksdnnkldsbnflnsdlfnsdl</div>
+      }
+    ]
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={routers}/>
+    <RouterProvider router={routers} />
   </React.StrictMode>,
 )

@@ -7,7 +7,14 @@
     box-shadow: -5px 0px 10px -5px rgba(34, 60, 80, 0.2) inset;
 }
 
-#login:focus {
-    outline: 1px solid black;
-    outline-offset: 0.2rem;
+#login:focus,
+#password:focus,
+#remember:focus,
+.btn-sing-in:focus {
+    outline: 2px solid #00cc00;
+    outline-offset: 5px;
+}
+
+#register:focus {
+    border-radius: 20px;
 }

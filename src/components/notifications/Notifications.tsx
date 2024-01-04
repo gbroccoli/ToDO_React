@@ -1,5 +1,6 @@
 import {FC, useEffect, useState} from "react"
 import "./style.css"
+import {} from "@formkit/auto-animate"
 
 type notifications_type = "success" | "error" | "warning" | "info"
 
@@ -8,25 +9,27 @@ interface notifications {
     text: string,
     title: string,
     show?: boolean,
+    func: () => void
 }
 
-const Notifications: FC<notifications> = ({type, text, title, show = false}) => { 
+const Notifications: FC<notifications> = ({type, text, title, show = false, func}) => { 
 
-    const styles = `absolute bottom-[10px] right-[10px] p-4 rounded text-[#e2e8f0] ${type}`
-    const [isVisible, setIsVisible] = useState<boolean>(show)
+    const styles = `absolute bottom-[10px] right-[10px] p-4 rounded text-[#e2e8f0] ${type} ${show ? "animated-element" : "animated-element_out"}`
     
     useEffect(()=>{
+
         if (show) {
+            
             const timer = setTimeout(()=>{
-                setIsVisible(false)
-            }, 10000)
+                func()
+            }, 5000)
 
             return () => {
                 clearTimeout(timer)
             }
         }
 
-    }, [show])
+    }, [])
 
     return (
         <div className={styles}>
