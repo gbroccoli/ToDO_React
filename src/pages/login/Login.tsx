@@ -11,7 +11,7 @@ interface msg {
 
 interface user_json {
 	login: string,
-	passwd: string,
+	password: string,
 	remember: boolean
 }
 
@@ -50,7 +50,7 @@ const Login = () => {
 
 		const user: user_json = {
 			login: login,
-			passwd: passwd,
+			password: passwd,
 			remember: rememberMe,
 		}
 

@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react"
 import "./style.css"
-import {} from "@formkit/auto-animate"
+import {animate, motion} from "framer-motion"
 
 type notifications_type = "success" | "error" | "warning" | "info"
 
@@ -12,9 +12,20 @@ interface notifications {
     func: () => void
 }
 
+const motionOptions = {
+    hidden: {
+        x: 100000,
+        opacity: 0,
+    },
+    visible: {
+        x: 0,
+        opacity: 1
+    }
+}
+
 const Notifications: FC<notifications> = ({type, text, title, show = false, func}) => { 
 
-    const styles = `absolute bottom-[10px] right-[10px] p-4 rounded text-[#e2e8f0] ${type} ${show ? "animated-element" : "animated-element_out"}`
+    const styles = `absolute bottom-[10px] right-[10px] p-4 rounded text-[#e2e8f0] ${type}`
     
     useEffect(()=>{
 
@@ -32,7 +43,7 @@ const Notifications: FC<notifications> = ({type, text, title, show = false, func
     }, [])
 
     return (
-        <div className={styles}>
+        <motion.div initial={'hidden'} animate={'visible'} transition={{delay: 2}} variants={motionOptions} className={styles}>
             <div className="notifications_body">
                 <div className="notifications_title">
                     {title}
@@ -41,7 +52,7 @@ const Notifications: FC<notifications> = ({type, text, title, show = false, func
                     {text}
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
